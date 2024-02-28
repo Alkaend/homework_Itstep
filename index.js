@@ -1,18 +1,55 @@
-alert("Вам необходимо зарегистрироваться.");
+outerLoop: while (true) {
 
-const regName = (prompt('Введите логин:'));
-const regPass = (prompt('Введите пароль:'));
+    alert("Вам необходимо зарегистрироваться.");
 
-while (true) {
+    const regName = (prompt('Введите логин: '));
+    const regPass = (prompt('Введите пароль: '));
+
+    const maxAttempts = 3;
+
+
     alert("Вам необходимо авторизоваться");
 
-    const authName = (prompt('Введите ваш логин: '));
-    const authPass = (prompt('Введите ваш пароль: '));
+    for (let attempts = 1; attempts <= maxAttempts; ++attempts) {
 
-    if (authName === regName && authPass === regPass) {
-        alert("Вход выполнен успешно!");
-        break;
-    } else {
-        alert("Неправильный логин или пароль. Пожалуйста, попробуйте ещё раз.");
+        let authName = (prompt('Введите логин: '));
+        let authPass = (prompt('Введите пароль: '));
+
+        if (authName === regName && authPass === regPass) {
+            alert('Вход выполнен успешно!');
+            break outerLoop;
+        }
+
+        alert(`Ошибка! Попытка ${attempts}/${maxAttempts}.`);
+
+        if (attempts === maxAttempts) {
+
+
+            const offer = confirm('Хотите создать новый аккаунт?');
+
+            if (offer) {
+                continue outerLoop;
+            } else {
+                const offer = confirm('Хотите сбросить пароль?');
+                if (offer) {
+                    while (true) {
+                        authName = (prompt('Введите логин: '));
+
+                        if (authName === regName) {
+                            regPass = (prompt('Введите пароль: '));
+
+                        } else {
+                            alert("Неправильный логин");
+                            if (confirm('Хотите создать новый аккаунт?'))
+                                continue outerLoop;
+                            else { continue; }
+                        }
+                    }
+                }
+
+                attempts = 0;
+
+            }
+        }
     }
 }
