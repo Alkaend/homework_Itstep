@@ -1,11 +1,12 @@
 console.clear();
 
-let array = [1, 2, 3, 4, 5];
-let newArray = new Array(array.length);
+const arr = [1, 2, 3];
+const element = 'begin';
 
-for (let a = array.length - 1, b=0; a >= 0; a--, b++) {
-    newArray[b] = array[a];
+for (let a = arr.length; a > 0; a--) {
+  arr[a] = arr[a - 1];
 }
 
-console.log(newArray);
+arr[0] = element;
 
+console.log(arr); 
