@@ -1,0 +1,91 @@
+console.clear();
+
+function MyArray(...args) {
+    this.elements = {
+        length: 0
+    }
+
+    this.shift = function () {
+        let cnt = 0;
+
+        const length = this.elements.length;
+
+        if (length === 0) return;
+
+        const lastItem = this.elements[0];
+
+        delete this.elements[0];
+
+        --this.elements.length;
+
+        for (let i = 0; i < this.elements.length; i++) {
+            this.elements[i] = this.elements[i + 1];
+        }
+
+        return lastItem;
+    }
+
+    this.unshift = function (...args) {
+
+        for (let i = this.elements.length - 1; i >= 0; i--) {
+
+            this.elements[i + args.length] = this.elements[i];
+
+        }
+
+        for (const arg of args) {
+            const index = args.indexOf(arg);
+
+            this.elements[index] = arg;
+
+            ++this.elements.length;
+        }
+
+        return this.elements.length;
+    }
+
+
+
+
+    this.push = function (...args) {
+        for (const arg of args) {
+            const index = this.elements.length;
+
+            this.elements[index] = arg;
+
+            ++this.elements.length;
+        }
+
+        return this.elements.length;
+    }
+
+    this.pop = function () {
+        const length = this.elements.length;
+
+        if (length === 0) return;
+
+        const lastItem = this.elements[length - 1];
+
+        delete this.elements[length - 1];
+
+        --this.elements.length;
+
+        return lastItem;
+    }
+
+    this.push(...args);
+}
+
+const arr = new MyArray(1, '2', [3]);
+
+console.log(arr.elements);
+
+arr.push(['4'], { x: 5 }, null);
+
+console.log(arr.elements);
+
+const firstItem = arr.shift();
+
+console.log(firstItem, arr.elements);
+
+console.log(arr.unshift(5, 10), arr.elements);
