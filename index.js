@@ -1,38 +1,122 @@
-let regex1 = /[0-2][0-4]:[0-5][0-9]/;
+console.clear();
 
-console.log(regex1.test('12:55'));
+class Human {
+    constructor(name, age) {
+        const _name = name;
+        const _age = age;
 
+        Object.defineProperty(this, 'name', {
+            get() {
+                return _name;
+            }
+        });
 
-let regex2 = /^\(\+994\)((-)|\s)((50)|(55)|(47)|(51))((-)|\s)\d{3}((-)|\s)\d{2}((-)|\s)\d{2}/;
+        Object.defineProperty(this, 'age', {
+            get() {
+                return _age;
+            }
+        });
+    }
+}
 
-console.log(regex2.test('(+994) 51 435 29 64'));
+class Player extends Human {
+    constructor(name, age, sportName, inMainTeam) {
+        super(name, age);
+        const _sportName = sportName;
+        const _inMainTeam = inMainTeam;
 
+        
 
-let m = document.querySelector('input');
+        Object.defineProperty(this, 'sportName', {
+            get() {
+                return _sportName;
+            }
+        });
 
-let regex3 = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[@#$%&_])(?=.*\d)(?=.*[!?.,])[A-Za-z\d@#$%&_!?.,]{8,16}$/
+        Object.defineProperty(this, 'inMainTeam', {
+            get() {
+                return _inMainTeam;
+            }
+        });
+    }
+}
 
-document.addEventListener('input', (e) => {
-    console.log(regex3.test(e.target.value));
+class FootballPlayer extends Player  {
+    constructor (name, age, inMainTeam) {
+    super(name, age, 'football', inMainTeam);
 
-});
+   
+  
+}}
 
+function Team() {
+    const _footballPlayers = [];
 
+    Object.defineProperty(this, 'footballPlayers', {
+        get() {
+            // FIXED RETURNING POINTER TO ORIGINAL ARRAY (_footbalPlayers)
+            return [..._footballPlayers];
+        }
+    })
 
+    this.addPlayers = function (...footballPlayers) {
+        _footballPlayers.push(...footballPlayers);
+    }
 
+    this.deletePlayer = function (footballPlayers) {
+        const indexOfFootballPlayer = _footballPlayers.indexOf(footballPlayers);
 
-let gorshok2 = "hello myalim :121 ";
-let regex4 = gorshok2.replace(/\d/g, 'D');
+        if (indexOfFootballPlayer !== -1) {
+            _footballPlayers.splice(indexOfFootballPlayer, 1);
+        }
+    }
 
-console.log(regex4);
+    this.getPlayersSortedByName = function () {
+        // FIXED RETURNING POINTER TO ORIGINAL ARRAY (_footbalPlayers)
+        return [..._footballPlayers].sort(function (a, b) {
+            const name1 = a.name;
+            const name2 = b.name;
 
-let gorshok = "Hello world 121 212";
-let regex5 = gorshok.replace(/\d+/g, 'N');
+            const name1InLowerCase = name1.toLowerCase();
+            const name2InLowerCase = name2.toLowerCase();
 
-console.log(regex5);
+            if(name1InLowerCase > name2InLowerCase) return 1;
+        if (name1InLowerCase < name2InLowerCase) return -1;
 
-let gorshok3 = "Hello     mir    manera           krytit     mir    fsdf   dsf   sfd   sdfd";
-let regex6 = gorshok3.split(/[^A-za-z]+/).length;
+        if (name1 > name2) return 1;
+        if (name1 < name2) return -1;
 
-console.log(regex6);
+        return 0;
+    });
+}
 
+this.getFilteredPlayers = function (inMainTeam) {
+    return _footballPlayers.filter(function (footballPlayer) {
+        return footballPlayer.inMainTeam === inMainTeam;
+    })
+}
+}
+
+const team = new Team();
+
+team.addPlayers(
+    new FootballPlayer('Rovshan', 25, false),
+    new FootballPlayer('Novruz', 27, true),
+    new FootballPlayer('Emil', 18, false),
+);
+
+const footballPlayers = team.footballPlayers;
+
+footballPlayers[1] = 'HACKED';
+
+for (const footballPlayer of team.footballPlayers) {
+    console.log(footballPlayer);
+}
+
+const sortedFootballPlayers = team.getPlayersSortedByName();
+
+sortedFootballPlayers[2] = 'HACKED';
+
+for (const footballPlayer of team.footballPlayers) {
+    console.log(footballPlayer);
+}
