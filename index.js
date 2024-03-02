@@ -1,8 +1,15 @@
-function findProto (object) {
-    do {
-        object = Object.getPrototypeOf(object);
-        console.log(object);
-      } while (object);
+const m = [1, 2, 3, 4];
+
+function printElements(m) {
+    let interval = setInterval(() => {
+        if (m[0] === undefined) {
+            clearInterval(interval);
+        } else {
+            console.log(m[0]);
+            m.splice(0, 1);
+        }
+    }, 1000
+    )
 }
 
-findProto(new Date());
+printElements(m);
