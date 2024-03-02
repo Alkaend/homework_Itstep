@@ -1,15 +1,11 @@
-const m = [1, 2, 3, 4];
-
-function printElements(m) {
-    let interval = setInterval(() => {
-        if (m[0] === undefined) {
-            clearInterval(interval);
-        } else {
-            console.log(m[0]);
-            m.splice(0, 1);
-        }
-    }, 1000
-    )
+function timer(interval, num) {
+    let timer = setInterval(() => {
+        console.log(num);
+        if (num === 0) {
+            clearInterval(timer);
+        } 
+        --num;
+    }, interval * 1000
+    );
 }
-
-printElements(m);
+timer(1, 5);
