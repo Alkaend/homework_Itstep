@@ -1,19 +1,26 @@
-let links = document.querySelectorAll('a');
+let button = document.querySelector('button');
+let m = [];
 
-function getRandomColor() {
-    let letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
+function addListeners(num) {
+    m = [];
+    for (let i = 1; i <= num; i++) {
+        function log() {
+            console.log(i);
+        }
+        m.push(log);
+        button.addEventListener('click', log);
     }
-    return color;
 }
 
-for (let link of links) {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
+addListeners(10);
 
-    });
-    link.addEventListener('mouseover', (e) => { link.style.color = getRandomColor(); });
-}
+button.addEventListener('click', () => {
+    setTimeout(() => {
+        let n = prompt('1-10:');
+        for (let i = 0; i < m.length; i++) {
+            button.removeEventListener('click', m[i]);
+        }
+        addListeners(Number(n));
+    }, 1)
+});
 
