@@ -1,17 +1,34 @@
-const titles = ['Заголовок 1', 'Очень длинный заголовок во всей книжке', 'Заголовок 2'];
-const pages = [10, 20, 123456789012345];
-
-
-
-for (let i = 0; i < titles.length; i++) {
-    console.log(titles[i].padEnd(20 - pages[i].toString().length - 1, '.') + "." + pages[i]);
-
+const obj = {
+    name: 'Alex',
+    surName: 'Max',
+    AGE: 40
 }
 
+function lowercaseKeys(obj) {
+    return Object.keys(obj).reduce((accumulator, key) => {
+        accumulator[key.toLowerCase()] = obj[key];
+        return accumulator;
+    }, {});
+}
 
+outerLoop:while (true) {
+    let m = prompt("Write something");
+    for (let i in obj) {
+        if (m.toLowerCase() === i.toLowerCase()) { 
+            alert(true);
+            continue outerLoop;
+         }
+
+    }
+    alert(false);
+}
 
 // Expected output:
 
-// Заголовок 1.......10
-// Очень длинный заголовок во всей книжке.20
-// Заголовок 2.123456789012345
+// template: user input -> output
+
+// NAME -> true
+// SURname -> true
+// AGE -> true
+// nAmEe -> false
+// birthDate -> false
