@@ -1,34 +1,23 @@
-const obj = {
-    name: 'Alex',
-    surName: 'Max',
-    AGE: 40
-}
+const convertString = function (str) {
+    let s = '';
+    let i = 0;
+    while (i < str.length) {
+        let n = str.charAt(i);
+        if (n == n.toUpperCase()) {
+            // Call toLowerCase
+            n = n.toLowerCase();
+        } else {
+            // Call toUpperCase
+            n = n.toUpperCase();
+        }
 
-function lowercaseKeys(obj) {
-    return Object.keys(obj).reduce((accumulator, key) => {
-        accumulator[key.toLowerCase()] = obj[key];
-        return accumulator;
-    }, {});
-}
-
-outerLoop:while (true) {
-    let m = prompt("Write something");
-    for (let i in obj) {
-        if (m.toLowerCase() === i.toLowerCase()) { 
-            alert(true);
-            continue outerLoop;
-         }
-
+        i += 1;
+        s += n;
     }
-    alert(false);
+    return s;
+};
+
+while (true) {
+    let m = convertString(prompt('Write something'));
+    console.log(m.split('').reverse().join(''));
 }
-
-// Expected output:
-
-// template: user input -> output
-
-// NAME -> true
-// SURname -> true
-// AGE -> true
-// nAmEe -> false
-// birthDate -> false
